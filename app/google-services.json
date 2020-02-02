@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1012759400842",
+    "firebase_url": "https://patient-report-ee3e6.firebaseio.com",
+    "project_id": "patient-report-ee3e6",
+    "storage_bucket": "patient-report-ee3e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012759400842:android:fa0824164d9a8e781c3873",
+        "android_client_info": {
+          "package_name": "com.example.doctorsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012759400842-8s4n79d6asbr3tjnrg82hi6lfr4189d2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.doctorsapp",
+            "certificate_hash": "5885390a34a1d2009b12326138732304d8f3417b"
+          }
+        },
+        {
+          "client_id": "1012759400842-ajm0mbkp3sl2qs4op6j6d44ku81rpicg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoYSw740qtR3Sbxst85_wfoaq6JKe7FXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012759400842-ajm0mbkp3sl2qs4op6j6d44ku81rpicg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
