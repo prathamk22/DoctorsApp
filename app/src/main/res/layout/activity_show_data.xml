@@ -121,5 +121,15 @@
             android:id="@+id/Diagnosis"/>
 
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sms"
+        android:onClick="sendSmsToPatient" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:onClick="sendEmailToPatient"/>
 
 </LinearLayout>
