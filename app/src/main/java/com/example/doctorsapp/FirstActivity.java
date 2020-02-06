@@ -2,17 +2,16 @@ package com.example.doctorsapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -49,7 +48,7 @@ public class FirstActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         doctors = new ArrayList<>();
         PHONE_NUMBER = firebaseUser.getPhoneNumber();
-        arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1,doctors);
+        arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_expandable_list_item_1,doctors);
         listView.setAdapter(arrayAdapter);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +64,6 @@ public class FirstActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ShowData.class);
                 intent.putExtra("doctor", arrayAdapter.getItem(i).toString());
                 startActivity(intent);
-//                Toast.makeText(FirstActivity.this, arrayAdapter.getItem(i), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -77,14 +75,31 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 doctors.clear();
-                if (dataSnapshot.child(PHONE_NUMBER).exists()){
-                    DataSnapshot dataSnapshot1 = dataSnapshot.child(PHONE_NUMBER).child("Doctors");
-                    for (DataSnapshot d:dataSnapshot1.getChildren()){
-                        doctors.add(d.getKey());
+
+                DataSnapshot dataSnapshot1 = dataSnapshot.child("Patient").child(PHONE_NUMBER).child("Doctors");
+
+                for (DataSnapshot snapshot : dataSnapshot1.getChildren()){
+                    DataSnapshot doc = dataSnapshot.child("Doctors");
+                    for (DataSnapshot docId1 : doc.getChildren()){
+                        for (DataSnapshot docId2 : docId1.getChildren()){
+                            Log.e("docId2",String.valueOf(docId2.getKey()));
+                            Log.e("snapshot",String.valueOf(snapshot.getKey()));
+                            if(snapshot.getKey().matches(docId2.getKey())){
+                                doctors.add(String.valueOf(docId2.child("name").getValue()));
+                            }
+                        }
+                        arrayAdapter.notifyDataSetChanged();
                     }
-                    arrayAdapter.notifyDataSetChanged();
-                }else
-                    Toast.makeText(FirstActivity.this, "No Doctor Added", Toast.LENGTH_SHORT).show();
+                }
+
+//                if (dataSnapshot.child(PHONE_NUMBER).exists()){
+//                    DataSnapshot dataSnapshot1 = dataSnapshot.child(PHONE_NUMBER).child("Doctors");
+//                    for (DataSnapshot d:dataSnapshot1.getChildren()){
+//                        doctors.add(d.getKey());
+//                    }
+//                    arrayAdapter.notifyDataSetChanged();
+//                }else
+//                    Toast.makeText(FirstActivity.this, "No Doctor Added", Toast.LENGTH_SHORT).show();
             }
 
             @Override

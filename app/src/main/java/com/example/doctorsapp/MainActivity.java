@@ -1,6 +1,7 @@
 package com.example.doctorsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Paint;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int RC_SIGN_IN = 123;
+
     FirebaseUser firebaseUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,49 +32,21 @@ public class MainActivity extends AppCompatActivity {
             Intent it = new Intent(MainActivity.this,FirstActivity.class);
             startActivity(it);
             finish();
-        }
-        if(firebaseUser==null){
-            Log.e("firebaseeee","name");
-            TextView tvLogin = findViewById(R.id.tvLogin);
-            tvLogin.setPaintFlags(tvLogin.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        }else {
+            setFragment(new EmailFragment());
         }
     }
 
-    public void signInIntent(View v) {
-        List<AuthUI.IdpConfig> providers =
-                Arrays.asList(new AuthUI.IdpConfig.PhoneBuilder().build());
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setTheme(R.style.AppTheme)
-                        .build(),
-                RC_SIGN_IN);
+
+    public void setFragment(Fragment fragment){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.frame,fragment)
+                .commit();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if(user!=null)
-                    Log.e("phoneNo:",user.getPhoneNumber()+"");
-                Intent it = new Intent(MainActivity.this,FirstActivity.class);
-                startActivity(it);
-                finish();
-                // ...
-            } else {
-                Log.e("phoneNo:","sign in failed");
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-            }
-        }
     }
 }

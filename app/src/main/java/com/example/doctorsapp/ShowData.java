@@ -23,6 +23,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+//import com.twilio.Twilio;
+//import com.twilio.rest.api.v2010.account.Message;
+//import com.twilio.type.PhoneNumber;
 
 public class ShowData extends AppCompatActivity {
 
@@ -30,6 +33,11 @@ public class ShowData extends AppCompatActivity {
     TextView medicine,advice,prescription,diagnosis,symptoms;
     FirebaseUser firebaseUser;
     String phoneNo,messageLink;
+    private static final String FROM   = "+12014855587";
+    public static final String ACCOUNT_SID =
+            "ACda0702a6bf864703cd5de526c2d7d5b3";
+    public static final String AUTH_TOKEN =
+            "4610df7714f2c920208a7d94469713aa";
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,7 @@ public class ShowData extends AppCompatActivity {
         symptoms = findViewById(R.id.Symptoms);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser!=null)
+            phoneNo = firebaseUser.getPhoneNumber();
         phoneNo = firebaseUser.getPhoneNumber();
         messageLink ="This will be the link to report";
 
@@ -53,16 +62,18 @@ public class ShowData extends AppCompatActivity {
 
     public void getData(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DataSnapshot doc = dataSnapshot.child(user.getPhoneNumber()).child("Doctors").child(docName);
-                medicine.setText(doc.child("Medicine").getValue().toString());
-                advice.setText(doc.child("Advice").getValue().toString());
-                prescription.setText(doc.child("Prescription").getValue().toString());
-                diagnosis.setText(doc.child("Diagnosis").getValue().toString());
-                symptoms.setText(doc.child("Symptoms").getValue().toString());
+                if(phoneNo!=null && docName!=null){
+                    DataSnapshot doc = dataSnapshot.child(phoneNo).child("Doctors").child(docName);
+                    medicine.setText(doc.child("Medicine").getValue().toString());
+                    advice.setText(doc.child("Advice").getValue().toString());
+                    prescription.setText(doc.child("Prescription").getValue().toString());
+                    diagnosis.setText(doc.child("Diagnosis").getValue().toString());
+                    symptoms.setText(doc.child("Symptoms").getValue().toString());
+                }
             }
 
             @Override
@@ -117,6 +128,7 @@ public class ShowData extends AppCompatActivity {
 
             if((ActivityCompat.checkSelfPermission(ShowData.this,
                     Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)){
+                Intent intent = new Intent();
                 Intent intent = new Intent(getApplicationContext(),ShowData.class);
                 PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
                 SmsManager smsManager = SmsManager.getDefault();
