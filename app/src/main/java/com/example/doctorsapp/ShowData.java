@@ -44,7 +44,6 @@ public class ShowData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_data);
         checkForSmsPermission();
-//        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         medicine = findViewById(R.id.medicine);
         advice = findViewById(R.id.advice);
         prescription = findViewById(R.id.Prescription);
@@ -53,6 +52,7 @@ public class ShowData extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser!=null)
             phoneNo = firebaseUser.getPhoneNumber();
+        phoneNo = firebaseUser.getPhoneNumber();
         messageLink ="This will be the link to report";
 
         docName = getIntent().getStringExtra("doctor");
@@ -128,13 +128,8 @@ public class ShowData extends AppCompatActivity {
 
             if((ActivityCompat.checkSelfPermission(ShowData.this,
                     Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)){
-//                Message mes = Message
-//                        .creator(new PhoneNumber(String.valueOf(phoneNo)), // to
-//                                new PhoneNumber(FROM), // from
-//                                "This is the twilio message")
-//                        .create();
-//                Toast.makeText(ShowData.this, mes.getSid(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
+                Intent intent = new Intent(getApplicationContext(),ShowData.class);
                 PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(phone,null,message,pi,null);
