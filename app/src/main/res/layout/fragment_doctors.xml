@@ -5,9 +5,28 @@
     android:layout_height="match_parent"
     tools:context=".DoctorsFragment">
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Available Doctors"
+        android:fontFamily="@font/radnika"
+        android:textSize="24sp"
+        android:layout_margin="15dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:id="@+id/available"
+        android:gravity="center" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/available"
         android:id="@+id/recyclerView"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

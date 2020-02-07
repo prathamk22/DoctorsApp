@@ -13,7 +13,9 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +35,7 @@ public class DoctorsFragment extends Fragment implements DoctorsAdapter.OnClick 
     ArrayList<DoctorModel> arrayList;
     DoctorsAdapter adapter;
     String phone;
-
+    ProgressBar progressBar;
     public DoctorsFragment() {
         // Required empty public constructor
     }
@@ -46,6 +48,7 @@ public class DoctorsFragment extends Fragment implements DoctorsAdapter.OnClick 
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         FloatingActionButton floatingActionButton = view.findViewById(R.id.fab);
+         progressBar = view.findViewById(R.id.progressBar);
 
         arrayList = new ArrayList<>();
         phone = getArguments().getString("phone");
@@ -82,14 +85,15 @@ public class DoctorsFragment extends Fragment implements DoctorsAdapter.OnClick 
 
                         DoctorModel model = new DoctorModel(hospital_name,name,spl,dataSnapshot2.getKey());
                         arrayList.add(model);
-                        adapter.notifyDataSetChanged();
                     }
                 }
+                progressBar.setVisibility(View.GONE);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                progressBar.setVisibility(View.GONE);
             }
         });
 
@@ -99,5 +103,6 @@ public class DoctorsFragment extends Fragment implements DoctorsAdapter.OnClick 
     public void onclick(DoctorModel model) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("Patient").child(phone).child("Doctors").child(model.id).setValue(model.name);
+        Toast.makeText(getContext(), model.name.concat(" added to doctors list"), Toast.LENGTH_SHORT).show();
     }
 }

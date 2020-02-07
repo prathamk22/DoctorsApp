@@ -35,7 +35,7 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.docName.setText(arrayList.get(position).name);
+        holder.docName.setText("Dr.".concat(arrayList.get(position).name));
         holder.hospitalName.setText(arrayList.get(position).hospital_name);
         holder.speciality.setText(arrayList.get(position).spl);
     }

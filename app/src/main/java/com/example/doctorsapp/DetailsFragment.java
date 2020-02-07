@@ -85,6 +85,7 @@ public class DetailsFragment extends Fragment {
         database.child("Patient").child(phone).child("prescription").child("advice").setValue("No Advice");
         database.child("Patient").child(phone).child("prescription").child("diagnosis").setValue("No Diagnosis");
         database.child("Patient").child(phone).child("prescription").child("symptoms").setValue("No Symptoms");
+        database.child("Patient").child(phone).child("prescription").child("medicine").setValue("No medicine");
 
         DoctorsFragment doctorsFragment = new DoctorsFragment();
         Bundle bundle = new Bundle();

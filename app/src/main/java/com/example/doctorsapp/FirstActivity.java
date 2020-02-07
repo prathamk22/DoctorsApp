@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -29,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
+
 public class FirstActivity extends AppCompatActivity {
 
     FirebaseUser firebaseUser;
@@ -38,6 +41,7 @@ public class FirstActivity extends AppCompatActivity {
     String PHONE_NUMBER;
     ArrayAdapter<String> arrayAdapter;
     FloatingActionButton fab;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,7 @@ public class FirstActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference();
         listView = findViewById(R.id.listView);
+        progressBar = findViewById(R.id.progressBar);
         fab = findViewById(R.id.fab);
         doctors = new ArrayList<>();
         PHONE_NUMBER = firebaseUser.getPhoneNumber();
@@ -54,7 +59,11 @@ public class FirstActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),AddDoctor.class));
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("doc",true);
+                intent.putExtra("phone",PHONE_NUMBER);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -62,7 +71,7 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), ShowData.class);
-                intent.putExtra("doctor", arrayAdapter.getItem(i).toString());
+                intent.putExtra("doctor", arrayAdapter.getItem(i));
                 startActivity(intent);
             }
         });
@@ -82,28 +91,19 @@ public class FirstActivity extends AppCompatActivity {
                     DataSnapshot doc = dataSnapshot.child("Doctors");
                     for (DataSnapshot docId1 : doc.getChildren()){
                         for (DataSnapshot docId2 : docId1.getChildren()){
-                            Log.e("docId2",String.valueOf(docId2.getKey()));
-                            Log.e("snapshot",String.valueOf(snapshot.getKey()));
                             if(snapshot.getKey().matches(docId2.getKey())){
                                 doctors.add(String.valueOf(docId2.child("name").getValue()));
                             }
                         }
+                        progressBar.setVisibility(GONE);
                         arrayAdapter.notifyDataSetChanged();
                     }
                 }
-
-//                if (dataSnapshot.child(PHONE_NUMBER).exists()){
-//                    DataSnapshot dataSnapshot1 = dataSnapshot.child(PHONE_NUMBER).child("Doctors");
-//                    for (DataSnapshot d:dataSnapshot1.getChildren()){
-//                        doctors.add(d.getKey());
-//                    }
-//                    arrayAdapter.notifyDataSetChanged();
-//                }else
-//                    Toast.makeText(FirstActivity.this, "No Doctor Added", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressBar.setVisibility(GONE);
                 Toast.makeText(FirstActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -130,12 +130,6 @@ public class FirstActivity extends AppCompatActivity {
                     });
         }
         return super.onOptionsItemSelected(item);
-    }
-    private void killApp(){
-        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-        homeIntent.addCategory( Intent.CATEGORY_HOME );
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(homeIntent);
     }
 
     @Override

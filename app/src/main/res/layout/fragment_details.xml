@@ -3,100 +3,166 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="20dp"
+    android:background="#fff"
     tools:context=".DetailsFragment">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="Enter your Details"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="#000"
+        android:fontFamily="@font/radnika"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="Name:"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:background="@null"
-            android:hint="Enter Name"
-            android:maxLines="1"
-            android:layout_marginTop="10dp"
-            android:id="@+id/nameEditText" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="Age:"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:background="@null"
-            android:inputType="number"
-            android:maxLines="1"
-            android:hint="Enter Age"
-            android:maxLength="2"
-            android:layout_marginTop="10dp"
-            android:id="@+id/ageEditText" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="Gender:"/>
+        app:cardBackgroundColor="#F0F0F0"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="25dp"
+        android:background="?attr/selectableItemBackground">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <RadioButton
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="Male"
-                android:checked="true"
-                android:id="@+id/maleRadio"
-                android:layout_marginRight="10dp" />
+                android:text="@string/name"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/radnika"
+                android:layout_marginLeft="10dp" />
 
-            <RadioButton
-                android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Female"
-                android:id="@+id/femaleRadio"/>
+                android:hint="@string/enter_name"
+                android:background="@null"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/radnika"
+                android:textSize="18sp"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:id="@+id/nameEditText"
+                android:layout_marginLeft="10dp" />
 
         </LinearLayout>
 
-    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#F0F0F0"
+        app:cardCornerRadius="10dp"
+        android:layout_marginBottom="25dp"
+        android:background="?attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/age"
+                android:textSize="14sp"
+                android:textColor="#000"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/radnika"
+                android:layout_marginLeft="10dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_age"
+                android:background="@null"
+                android:layout_marginStart="10dp"
+                android:textSize="18sp"
+                android:fontFamily="@font/radnika"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:id="@+id/ageEditText"
+                android:layout_marginLeft="10dp" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#F0F0F0"
+        app:cardCornerRadius="10dp"
+        android:layout_marginBottom="25dp"
+        android:background="?attr/selectableItemBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:fontFamily="@font/radnika"
+                android:textColor="#000"
+                android:layout_marginStart="10dp"
+                android:text="@string/gender"
+                android:layout_marginLeft="10dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:text="Male"
+                    android:checked="true"
+                    android:id="@+id/maleRadio"
+                    android:layout_marginRight="20dp" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:id="@+id/femaleRadio"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:layout_marginTop="10dp"
         android:id="@+id/sendBtn"
-        android:text="Send Data"/>
+        android:text="Done"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
 
 </LinearLayout>
