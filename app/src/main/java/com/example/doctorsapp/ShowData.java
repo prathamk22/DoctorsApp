@@ -30,14 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 public class ShowData extends AppCompatActivity {
 
     String docName;
-    TextView medicine,advice,prescription,diagnosis,symptoms;
+    TextView medicine,advice,diagnosis,symptoms,email,phoneNumber;
     FirebaseUser firebaseUser;
     String phoneNo,messageLink;
-    private static final String FROM   = "+12014855587";
-    public static final String ACCOUNT_SID =
-            "ACda0702a6bf864703cd5de526c2d7d5b3";
-    public static final String AUTH_TOKEN =
-            "4610df7714f2c920208a7d94469713aa";
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +40,9 @@ public class ShowData extends AppCompatActivity {
         setContentView(R.layout.activity_show_data);
         checkForSmsPermission();
         medicine = findViewById(R.id.medicine);
+        email = findViewById(R.id.email);
+        phoneNumber = findViewById(R.id.phoneNumber);
         advice = findViewById(R.id.advice);
-        prescription = findViewById(R.id.Prescription);
         diagnosis = findViewById(R.id.Diagnosis);
         symptoms = findViewById(R.id.Symptoms);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -56,6 +52,20 @@ public class ShowData extends AppCompatActivity {
         messageLink ="This will be the link to report";
 
         docName = getIntent().getStringExtra("doctor");
+
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendEmailToPatient();
+            }
+        });
+
+        phoneNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendSmsToPatient();
+            }
+        });
 
         getData();
     }
@@ -67,12 +77,11 @@ public class ShowData extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(phoneNo!=null && docName!=null){
-                    DataSnapshot doc = dataSnapshot.child(phoneNo).child("Doctors").child(docName);
-                    medicine.setText(doc.child("Medicine").getValue().toString());
-                    advice.setText(doc.child("Advice").getValue().toString());
-                    prescription.setText(doc.child("Prescription").getValue().toString());
-                    diagnosis.setText(doc.child("Diagnosis").getValue().toString());
-                    symptoms.setText(doc.child("Symptoms").getValue().toString());
+                    DataSnapshot doc = dataSnapshot.child("Patient").child(phoneNo).child("prescription");
+                    medicine.setText(String.valueOf(doc.child("medicine").getValue()));
+                    advice.setText(String.valueOf(doc.child("advice").getValue()));
+                    diagnosis.setText(String.valueOf(doc.child("diagnosis").getValue()));
+                    symptoms.setText(String.valueOf(doc.child("symptoms").getValue()));
                 }
             }
 
@@ -84,7 +93,7 @@ public class ShowData extends AppCompatActivity {
     }
 
     //Adding this function to button or anywhere you want
-    public void sendSmsToPatient(View view){
+    public void sendSmsToPatient(){
         checkForSmsPermission();
         if(phoneNo!=null){
             SmsAsyncTask smsAsyncTask = new SmsAsyncTask();
@@ -92,7 +101,7 @@ public class ShowData extends AppCompatActivity {
         }
     }
 
-    public void sendEmailToPatient(View view){
+    public void sendEmailToPatient(){
         String subject ="Patient Report";
         String patientEmail = "abhishekavi4602@gmail.com";//change email here
         Intent email = new Intent(Intent.ACTION_SEND);
@@ -129,7 +138,6 @@ public class ShowData extends AppCompatActivity {
             if((ActivityCompat.checkSelfPermission(ShowData.this,
                     Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)){
                 Intent intent = new Intent();
-                Intent intent = new Intent(getApplicationContext(),ShowData.class);
                 PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(phone,null,message,pi,null);

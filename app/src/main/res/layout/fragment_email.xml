@@ -3,29 +3,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#faf3e3"
     tools:context=".EmailFragment">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:fontFamily="@font/radnika"
+        android:layout_margin="10dp"
+        android:textSize="32sp"
+        android:text="An app to handle all your docTalks"/>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="#fbfbfb">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:id="@+id/email"
-            android:layout_marginBottom="50dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone number"
-            android:id="@+id/phoneNumber"/>
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:contentDescription="@null"
+                android:id="@+id/logo"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/logo" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/logo"
+                android:text="Welcome to DocTalks App"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:fontFamily="@font/radnika"
+                android:textColor="#000"
+                android:id="@+id/welcomeText"
+                android:layout_marginTop="10dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/btnHolder"
+                android:layout_below="@+id/welcomeText">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/email"
+                    android:layout_toStartOf="@+id/phoneNumber"
+                    android:text="Email"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:background="#ffda1c"
+                    android:textColor="#000"
+                    android:textAllCaps="true"
+                    android:padding="10dp"
+                    android:layout_toLeftOf="@+id/phoneNumber" />
+
+                <TextView
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/phoneNumber"
+                    android:layout_alignParentEnd="true"
+                    android:text="Phone Number"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:background="#000"
+                    android:textColor="#fff"
+                    android:textAllCaps="true"
+                    android:padding="10dp"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Happy to see you"
+                android:gravity="center"
+                android:layout_below="@+id/btnHolder"
+                android:textColor="#a3a3a3"
+                android:fontFamily="@font/radnika"
+                android:textSize="18sp"
+                android:layout_marginBottom="20dp"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

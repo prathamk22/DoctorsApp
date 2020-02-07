@@ -16,8 +16,6 @@
       "oauth_client": [
         {
           "client_id": "299545536520-6facqom54qen23svs9fodhtok2agdupa.apps.googleusercontent.com",
-=======
-          "client_id": "1012759400842-923agvhm7hr4bruktqnfdvokpo6eg9bl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.doctorsapp",

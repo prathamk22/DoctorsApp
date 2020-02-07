@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -36,7 +37,7 @@ public class EmailFragment extends Fragment {
 
     private static final int RC_SIGN_IN = 123;
 
-    Button email,phoneNumber;
+    TextView email,phoneNumber;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,16 +89,11 @@ public class EmailFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-                // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null)
                     Log.e("phoneNo:",user.getPhoneNumber()+"");
-//                Intent it = new Intent(getContext(),FirstActivity.class);
-//                startActivity(it);
-//                getActivity().finish();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("phone",user.getPhoneNumber());
@@ -109,14 +105,8 @@ public class EmailFragment extends Fragment {
                         .beginTransaction()
                         .replace(R.id.frame,detailsFragment)
                         .commit();
-
-                // ...
             } else {
                 Log.e("phoneNo:","sign in failed");
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
             }
         }
     }
